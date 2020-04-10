@@ -15,77 +15,87 @@ namespace Katas
 		public void updateQuality()
 		{
 			for (int i = 0; i < _items.Count; i++)
-			{
-				if ((!"Aged Brie".Equals(_items[i].Name)) && !"Backstage passes to a TAFKAL80ETC concert".Equals(_items[i].Name))
-				{
-					if (_items[i].Quality > 0)
-					{
-						if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
-						{
-							_items[i].Quality = _items[i].Quality - 1;
-						}
-					}
-				}
-				else
-				{
-					if (_items[i].Quality < 50)
-					{
-						_items[i].Quality = _items[i].Quality + 1;
+            {
+                if (IsNotAgedBrie(i) && IsNotBackstagePasses(i))
+                {
+                    if (_items[i].Quality > 0)
+                    {
+                        if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
+                        {
+                            _items[i].Quality = _items[i].Quality - 1;
+                        }
+                    }
+                }
+                else
+                {
+                    if (_items[i].Quality < 50)
+                    {
+                        _items[i].Quality = _items[i].Quality + 1;
 
-						if ("Backstage passes to a TAFKAL80ETC concert".Equals(_items[i].Name))
-						{
-							if (_items[i].SellIn < 11)
-							{
-								if (_items[i].Quality < 50)
-								{
-									_items[i].Quality = (_items[i].Quality + 1);
-								}
-							}
+                        if ("Backstage passes to a TAFKAL80ETC concert".Equals(_items[i].Name))
+                        {
+                            if (_items[i].SellIn < 11)
+                            {
+                                if (_items[i].Quality < 50)
+                                {
+                                    _items[i].Quality = (_items[i].Quality + 1);
+                                }
+                            }
 
-							if (_items[i].SellIn < 6)
-							{
-								if (_items[i].Quality < 50)
-								{
-									_items[i].Quality = (_items[i].Quality + 1);
-								}
-							}
-						}
-					}
-				}
+                            if (_items[i].SellIn < 6)
+                            {
+                                if (_items[i].Quality < 50)
+                                {
+                                    _items[i].Quality = (_items[i].Quality + 1);
+                                }
+                            }
+                        }
+                    }
+                }
 
-				if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
-				{
-					_items[i].SellIn = (_items[i].SellIn - 1);
-				}
+                if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
+                {
+                    _items[i].SellIn = (_items[i].SellIn - 1);
+                }
 
-				if (_items[i].SellIn < 0)
-				{
-					if (!"Aged Brie".Equals(_items[i].Name))
-					{
-						if (!"Backstage passes to a TAFKAL80ETC concert".Equals(_items[i].Name))
-						{
-							if (_items[i].Quality > 0)
-							{
-								if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
-								{
-									_items[i].Quality = (_items[i].Quality - 1);
-								}
-							}
-						}
-						else
-						{
-							_items[i].Quality = (_items[i].Quality - _items[i].Quality);
-						}
-					}
-					else
-					{
-						if (_items[i].Quality < 50)
-						{
-							_items[i].Quality = (_items[i].Quality + 1);
-						}
-					}
-				}
-			}
-		}
-	}
+                if (_items[i].SellIn < 0)
+                {
+                    if (IsNotAgedBrie(i))
+                    {
+                        if (IsNotBackstagePasses(i))
+                        {
+                            if (_items[i].Quality > 0)
+                            {
+                                if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
+                                {
+                                    _items[i].Quality = (_items[i].Quality - 1);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            _items[i].Quality = (_items[i].Quality - _items[i].Quality);
+                        }
+                    }
+                    else
+                    {
+                        if (_items[i].Quality < 50)
+                        {
+                            _items[i].Quality = (_items[i].Quality + 1);
+                        }
+                    }
+                }
+            }
+        }
+
+        private static bool IsNotBackstagePasses(int i)
+        {
+            return !"Backstage passes to a TAFKAL80ETC concert".Equals(_items[i].Name);
+        }
+
+        private static bool IsNotAgedBrie(int i)
+        {
+            return (!"Aged Brie".Equals(_items[i].Name));
+        }
+    }
 }
