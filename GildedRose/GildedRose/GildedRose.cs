@@ -20,7 +20,7 @@ namespace Katas
                 {
                     if (_items[i].Quality > 0)
                     {
-                        if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
+                        if (IsNotSulfuras(i))
                         {
                             _items[i].Quality = _items[i].Quality - 1;
                         }
@@ -32,7 +32,7 @@ namespace Katas
                     {
                         _items[i].Quality = _items[i].Quality + 1;
 
-                        if ("Backstage passes to a TAFKAL80ETC concert".Equals(_items[i].Name))
+                        if (!IsNotBackstagePasses(i))
                         {
                             if (_items[i].SellIn < 11)
                             {
@@ -53,7 +53,7 @@ namespace Katas
                     }
                 }
 
-                if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
+                if (IsNotSulfuras(i))
                 {
                     _items[i].SellIn = (_items[i].SellIn - 1);
                 }
@@ -66,7 +66,7 @@ namespace Katas
                         {
                             if (_items[i].Quality > 0)
                             {
-                                if (!"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name))
+                                if (IsNotSulfuras(i))
                                 {
                                     _items[i].Quality = (_items[i].Quality - 1);
                                 }
@@ -86,6 +86,11 @@ namespace Katas
                     }
                 }
             }
+        }
+
+        private static bool IsNotSulfuras(int i)
+        {
+            return !"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name);
         }
 
         private static bool IsNotBackstagePasses(int i)
