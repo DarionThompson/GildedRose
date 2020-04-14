@@ -16,7 +16,7 @@ namespace Katas
             var expectedContent = GetExpctedResults();
 
             //Act
-            gildedRose.updateQuality();
+            gildedRose.UpdateQuality(itemsList);
 
             //Assert
             itemsList.Should().BeEquivalentTo(expectedContent);

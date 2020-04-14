@@ -12,95 +12,85 @@ namespace Katas
 			_items = items;
         }
 
-		public void updateQuality()
-		{
-			for (int i = 0; i < _items.Count; i++)
+        public void UpdateQuality(List<Item> items)
+        {
+            foreach (var item in items)
             {
-                if (IsNotAgedBrie(i) && IsNotBackstagePasses(i))
+                UpdateItemQuality(item);
+            }
+        }
+
+		public void UpdateItemQuality(Item item)
+		{
+            if (item.IsNotAgedBrie() && item.IsNotBackstagePasses())
+            {
+                if (item.IsQualityGreaterThanZero())
                 {
-                    if (_items[i].Quality > 0)
+                    if (item.IsNotSulfuras())
                     {
-                        if (IsNotSulfuras(i))
-                        {
-                            _items[i].Quality = _items[i].Quality - 1;
-                        }
+                        item.Quality = item.Quality - 1;
                     }
                 }
-                else
+            }
+            else
+            {
+                if (item.IsQualityLessThanFifty())
                 {
-                    if (_items[i].Quality < 50)
+                    item.Quality = item.Quality + 1;
+
+                    if (!item.IsNotBackstagePasses())
                     {
-                        _items[i].Quality = _items[i].Quality + 1;
-
-                        if (!IsNotBackstagePasses(i))
+                        if (item.SellIn < 11)
                         {
-                            if (_items[i].SellIn < 11)
+                            if (item.IsQualityLessThanFifty())
                             {
-                                if (_items[i].Quality < 50)
-                                {
-                                    _items[i].Quality = (_items[i].Quality + 1);
-                                }
-                            }
-
-                            if (_items[i].SellIn < 6)
-                            {
-                                if (_items[i].Quality < 50)
-                                {
-                                    _items[i].Quality = (_items[i].Quality + 1);
-                                }
+                                item.Quality = (item.Quality + 1);
                             }
                         }
-                    }
-                }
 
-                if (IsNotSulfuras(i))
-                {
-                    _items[i].SellIn = (_items[i].SellIn - 1);
-                }
-
-                if (_items[i].SellIn < 0)
-                {
-                    if (IsNotAgedBrie(i))
-                    {
-                        if (IsNotBackstagePasses(i))
+                        if (item.SellIn < 6)
                         {
-                            if (_items[i].Quality > 0)
+                            if (item.IsQualityLessThanFifty())
                             {
-                                if (IsNotSulfuras(i))
-                                {
-                                    _items[i].Quality = (_items[i].Quality - 1);
-                                }
+                                item.Quality = item.Quality + 1;
                             }
-                        }
-                        else
-                        {
-                            _items[i].Quality = (_items[i].Quality - _items[i].Quality);
-                        }
-                    }
-                    else
-                    {
-                        if (_items[i].Quality < 50)
-                        {
-                            _items[i].Quality = (_items[i].Quality + 1);
                         }
                     }
                 }
             }
-        }
 
-        private static bool IsNotSulfuras(int i)
-        {
-            return !"Sulfuras, Hand of Ragnaros".Equals(_items[i].Name);
-        }
+            if (item.IsNotSulfuras())
+            {
+                item.SellIn = (item.SellIn - 1);
+            }
 
-        private static bool IsNotBackstagePasses(int i)
-        {
-            return !"Backstage passes to a TAFKAL80ETC concert".Equals(_items[i].Name);
-        }
-
-        private static bool IsNotAgedBrie(int i)
-        {
-            return (!"Aged Brie".Equals(_items[i].Name));
-        }
+            if (item.IsSellinLessThanZero())
+            {
+                if (item.IsNotAgedBrie())
+                {
+                    if (item.IsNotBackstagePasses())
+                    {
+                        if (item.IsQualityGreaterThanZero())
+                        {
+                            if (item.IsNotSulfuras())
+                            {
+                                item.Quality = (item.Quality - 1);
+                            }
+                        }
+                    }
+                    else
+                    {
+                        item.Quality = (item.Quality - item.Quality);
+                    }
+                }
+                else
+                {
+                    if (item.IsQualityLessThanFifty())
+                    {
+                        item.Quality = (item.Quality + 1);
+                    }
+                }
+            }
+        } 
     }
 }
